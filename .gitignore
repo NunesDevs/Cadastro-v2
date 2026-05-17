@@ -361,3 +361,21 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Jarvis safety
+.env
+.env.local
+.env.*.local
+.next/
+dist/
+build/
+coverage/
+.DS_Store
+.vscode/
+.idea/
+.venv/
+venv/
+uploads/
+tmp/
+temp/
+cache/
