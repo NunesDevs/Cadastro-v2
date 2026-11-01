@@ -1,37 +1,44 @@
 # Cadastro-v2
 
-# Painel de cadastros v2
+Cadastro de funcionários com interface de console e API REST, repositório em memória e testes xUnit.
 
-## Novos metodos parametros e funções
+## Funcionalidades verificadas
 
-### Rode inMemory ou em um servidor local!! ### Requisitos para rodar:
+- Listar, inserir, atualizar e excluir cadastros.
+- Interface de console.
+- API HTTP de cadastro.
+- Testes de repositório e controlador.
 
-.net
+## Operação e arquitetura verificadas
 
-<a href = "https://dotnet.microsoft.com/en-us/download" target="_blank">
+Biblioteca de domínio Cadastro-v2, Cadastro.Console, Cadastro.Web e projetos de testes. A API usa um repositório singleton em memória.
 
-<p> Para baixar clique aqui</p>
+Arquivos principais: `Cadastro.Web/Controllers/CadastroController.cs`, `Cadastro.Web/Startup.cs`, `Cadastro-v2/Classes/cadastroRepo.cs`, `Cadastro.Test/CadastroRepoTeste.cs`.
 
-</a>
+### Requisitos e execução
 
-Editor de texto de sua preferencia ou IDE.
-Recomendado: Visual Studio
+SDK .NET compatível com os TargetFramework dos projetos.
 
-#### Menu com funções para interagir.
+```text
+dotnet build Cadastro.sln
+dotnet test Cadastro.sln
+dotnet run --project Cadastro.Console/Cadastro.Console.csproj
+dotnet run --project Cadastro.Web/Cadastro.Web.csproj
+```
 
-################################
 
-Painel de funcionários ativo!
 
-################################
+### Testes e estado
 
- ##### Informe a opção desejada
- ###### 1 - Listar funcionários
- ###### 2 - Inserir novo funcionário
- ###### 3 - Atualizar dados
- ###### 4 - Excluir funcionário
- ###### 5 - Visualizar funcionários
- ###### C - Limpar Tela
- ###### X - Sair
- ##### Obrigado por utilizar nossos serviços.
+Há projetos xUnit de repositório e controlador. Não foram executados nesta máquina, que não possui SDK .NET.
 
+Estado: projeto de estudo/experimental. Deploy ativo não foi confirmado nesta revisão.
+
+### Limitações conhecidas
+
+- Consultas e atualizações precisam tratar IDs ausentes.
+- Não há persistência de dados nem autenticação nas rotas de cadastro.
+
+### Licença e manutenção
+
+Nenhum arquivo de licença foi identificado nesta revisão; não foi adicionada uma nova licença. Atualize comandos e limitações quando houver mudança de comportamento.
