@@ -1,60 +1,44 @@
-﻿using Cadastro.Interfaces;
+using Cadastro.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cadastro.Web.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
-    public class CadastroController : Controller
+    public class CadastroController : ControllerBase
     {
-        private readonly IRepositorio<CadastroProj> _repositorioCadastro;
-
-        public CadastroController(IRepositorio<CadastroProj> repositorioCadastro)
-        {
-            _repositorioCadastro = repositorioCadastro;
-        }
-
+        private readonly IRepositorio<CadastroProj> repo;
+        public CadastroController(IRepositorio<CadastroProj> repositorioCadastro) { repo = repositorioCadastro; }
         [HttpGet("")]
-        public IActionResult Lista()
-        {
-            return Ok(_repositorioCadastro.Lista().Select(c => new CadastroModel(c)));
-
-            IList<CadastroModel> cadastro = new List<CadastroModel>();
-
+        public IActionResult Lista() => Ok(repo.Lista().Select(c => new CadastroModel(c)).ToList());
+        [HttpGet("{id:int}")]
+        public IActionResult Consulta(int id) {
+            var cadastro = repo.RetornarPorId(id);
+            return cadastro == null ? NotFound() : Ok(new CadastroModel(cadastro));
         }
-
-        [HttpPut("{id}")]
-        public IActionResult Atualiza(int id, [FromBody] CadastroModel model)
-        {
-            _repositorioCadastro.Atualiza(id, model.ToCadastroProj());
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Exclui(int id)
-        {
-            _repositorioCadastro.Exclui(id);
-            return NoContent();
-        }
-
         [HttpPost("")]
-        public IActionResult Insere([FromBody] CadastroModel model)
-        {
-            model.Id = _repositorioCadastro.ProximoId();
-
-            CadastroProj cadastroProj = model.ToCadastroProj();
-
-            _repositorioCadastro.Insere(cadastroProj);
-            return Created("", cadastroProj);
+        public IActionResult Insere([FromBody] CadastroModel model) {
+            try {
+                model.Id = repo.ProximoId();
+                var cadastro = model.ToCadastroProj(); repo.Insere(cadastro);
+                return CreatedAtAction(nameof(Consulta), new {id = cadastro.Id}, new CadastroModel(cadastro));
+            } catch (ArgumentException error) { return BadRequest(new {message = error.Message}); }
         }
-
-        [HttpGet("{id}")]
-        public IActionResult Consulta(int id)
-        {
-            return Ok(new CadastroModel(_repositorioCadastro.Lista().FirstOrDefault(c => c.Id == id)));
+        [HttpPut("{id:int}")]
+        public IActionResult Atualiza(int id, [FromBody] CadastroModel model) {
+            try {
+                if (repo.RetornarPorId(id) == null) return NotFound();
+                model.Id = id; repo.Atualiza(id, model.ToCadastroProj()); return NoContent();
+            } catch (KeyNotFoundException) { return NotFound(); }
+              catch (ArgumentException error) { return BadRequest(new {message = error.Message}); }
+        }
+        [HttpDelete("{id:int}")]
+        public IActionResult Exclui(int id) {
+            try { repo.Exclui(id); return NoContent(); }
+            catch (KeyNotFoundException) { return NotFound(); }
         }
     }
 }

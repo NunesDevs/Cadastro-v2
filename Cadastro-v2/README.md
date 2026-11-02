@@ -1,37 +1,7 @@
-# Projeto cadastro de funcionários
+# Biblioteca de domínio do cadastro
 
-## Solução simples sem banco de dados pensado no cadastro de funcionários em C#.
+Este projeto é uma biblioteca compartilhada pelo console e pela API. Ele não possui ponto de entrada executável.
 
-### Requisitos para rodar:
+Requer SDK .NET 10. Para compilar isoladamente: `dotnet build Cadastro.csproj -c Release`. Para executar o console, partindo da raiz do repositório: `dotnet run --project Cadastro.Console`.
 
-.net
-
-<a href = "https://dotnet.microsoft.com/en-us/download" target="_blank">
-
-<p> Para baixar clique aqui</p>
-
-</a>
-
-Editor de texto de sua preferencia ou IDE.
-
- ## Funcionamento:
-
-#### Para rodar digite ```dotnet run ``` no console.
-
-#### Menu com funções para interagir.
-
-################################
-
-Painel de funcionários ativo!
-
-################################
-
- - Informe a opção desejada -
-1 - Listar funcionários
-2 - Inserir novo funcionário
-3 - Atualizar dados
-4 - Excluir funcionário
-5 - Visualizar funcionários
-C - Limpar Tela
-X - Sair
- - Obrigado por utilizar nossos serviços.
+Consulte o [README principal](../README.md) para testes, empacotamento, contrato HTTP e limitações de armazenamento.

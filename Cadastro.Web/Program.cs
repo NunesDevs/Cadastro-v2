@@ -20,6 +20,7 @@ namespace Cadastro.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls(Environment.GetEnvironmentVariable("ASPNETCORE_URLS") ?? "http://127.0.0.1:5080");
                     webBuilder.UseStartup<Startup>();
                 });
     }

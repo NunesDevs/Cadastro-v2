@@ -1,19 +1,25 @@
-﻿using System;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cadastro.Web
 {
-    
+
     public class CadastroModel
     {
         public int Id { get; set; }
+        [EnumDataType(typeof(Genero))]
         public Genero Genero { get; set; }
-        public string Nome { get; set; }
+        [Required, StringLength(100)]
+        public string Nome { get; set; } = string.Empty;
+        [Range(0, 130)]
         public int Idade { get; set; }
+        [EnumDataType(typeof(Area))]
         public Area Area { get; set; }
-        public string Funcao { get; set; }
+        [Required, StringLength(100)]
+        public string Funcao { get; set; } = string.Empty;
         public bool Excluido { get; set; }
 
         public CadastroModel() { }
@@ -35,5 +41,4 @@ namespace Cadastro.Web
         }
     }
 
-    
 }

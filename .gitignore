@@ -379,3 +379,9 @@ uploads/
 tmp/
 temp/
 cache/
+
+# .NET output
+**/bin/
+**/obj/
+artifacts/
+TestResults/

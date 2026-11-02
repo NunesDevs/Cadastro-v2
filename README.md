@@ -1,44 +1,35 @@
-# Cadastro-v2
+# Cadastro v2 — domínio, console e API
 
-Cadastro de funcionários com interface de console e API REST, repositório em memória e testes xUnit.
+Evolução do cadastro de funcionários com biblioteca compartilhada, console e API ASP.NET Core.
 
-## Funcionalidades verificadas
+## Comportamento
 
-- Listar, inserir, atualizar e excluir cadastros.
-- Interface de console.
-- API HTTP de cadastro.
-- Testes de repositório e controlador.
+- Projetos migrados de .NET Core 3.1 para .NET 10 LTS.
+- Repositório sincronizado por IDs lógicos, validação de domínio e exclusão lógica.
+- API `/Cadastro` retorna 404 para ausentes, 400 para entradas inválidas e usa o ID da rota na atualização.
+- Criação retorna a representação do cadastro e um cabeçalho Location por `CreatedAtAction`.
+- Console usa o mesmo domínio validado e recupera erros de entrada.
 
-## Operação e arquitetura verificadas
+## Executar e validar
 
-Biblioteca de domínio Cadastro-v2, Cadastro.Console, Cadastro.Web e projetos de testes. A API usa um repositório singleton em memória.
+SDK .NET 10; a primeira restauração baixa as dependências de teste do NuGet.
 
-Arquivos principais: `Cadastro.Web/Controllers/CadastroController.cs`, `Cadastro.Web/Startup.cs`, `Cadastro-v2/Classes/cadastroRepo.cs`, `Cadastro.Test/CadastroRepoTeste.cs`.
-
-### Requisitos e execução
-
-SDK .NET compatível com os TargetFramework dos projetos.
-
-```text
-dotnet build Cadastro.sln
-dotnet test Cadastro.sln
-dotnet run --project Cadastro.Console/Cadastro.Console.csproj
-dotnet run --project Cadastro.Web/Cadastro.Web.csproj
+```powershell
+./build.ps1 -Test -Package
+dotnet run --project Cadastro.Console
+dotnet run --project Cadastro.Web
 ```
 
+A API escuta `http://127.0.0.1:5080` por padrão. `ASPNETCORE_URLS` permite um endereço explícito. `dotnet test Cadastro.sln -c Release` executa os testes de domínio e controlador.
 
+JSON de criação: `{"genero":3,"nome":"Pessoa de teste","idade":25,"area":9,"funcao":"Desenvolvimento"}`. Listagem: `GET /Cadastro`; consulta, alteração e exclusão: `/Cadastro/{id}`.
 
-### Testes e estado
+## Limites
 
-Há projetos xUnit de repositório e controlador. Não foram executados nesta máquina, que não possui SDK .NET.
+Dados permanecem em memória e somem ao reiniciar. A API é um exercício sem autenticação, destinada a uso local com dados fictícios. Não existe interface gráfica neste projeto. O pacote padrão é o console Windows; a API exige host e política de acesso próprios antes de uma publicação na rede.
 
-Estado: projeto de estudo/experimental. Deploy ativo não foi confirmado nesta revisão.
+## Manutenção e licença
 
-### Limitações conhecidas
+Código autoral licenciado sob a [MIT](LICENSE). Dependências, ferramentas e materiais de terceiros mantêm suas próprias licenças e avisos.
 
-- Consultas e atualizações precisam tratar IDs ausentes.
-- Não há persistência de dados nem autenticação nas rotas de cadastro.
-
-### Licença e manutenção
-
-Nenhum arquivo de licença foi identificado nesta revisão; não foi adicionada uma nova licença. Atualize comandos e limitações quando houver mudança de comportamento.
+Decisões e continuidade: [PROJECT_MEMORY.md](PROJECT_MEMORY.md).

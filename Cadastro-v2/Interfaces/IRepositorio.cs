@@ -5,7 +5,7 @@ namespace Cadastro.Interfaces
     public interface IRepositorio<T>
     {
          List<T> Lista();
-         T RetornarPorId(int id);
+         T? RetornarPorId(int id);
          void Insere(T entidade);
          void Exclui(int id);
          void Atualiza(int id, T entidade);
