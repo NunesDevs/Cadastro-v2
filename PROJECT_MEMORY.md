@@ -48,3 +48,9 @@ Pacotes Release omitem símbolos de depuração e mapeiam caminhos de origem em 
 ## Evidência da revisão
 
 Build .NET 10, nove testes xUnit e publish de console/API aprovados. Oito verificações HTTP reais em loopback aprovaram CRUD, Location, identidade da URL, validação de enum e 404 após exclusão. Console empacotado aprovado com dados fictícios e EOF.
+
+## CI — 2026-11-08
+
+O workflow `.github/workflows/ci.yml` valida a stack e os testes reais deste projeto em push/PR para `master` e por disparo manual. Usa ações oficiais fixadas por SHA, permissão `contents: read` e checkout sem credenciais persistentes. Não faz deploy nem publica pacotes.
+
+A release `v2026.11.8` e seus binários continuam associados ao código `8c13d525c95699862eed5c13859eef0b53f06554`. O commit de workflow/documentação é posterior e não muda os artefatos já compilados. Resultado da execução remota disponível na aba Actions; não confundir configuração do workflow com aprovação de uma execução.
